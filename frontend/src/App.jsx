@@ -49,6 +49,14 @@ const App = () => {
     }
   }
 
+  const handleLogout = () => {
+    window.localStorage.removeItem('loggedBlogappUser')
+    setUser(null) 
+    setUsername('')
+    setPassword('')
+    window.location.reload()
+  }
+
   const loginForm = () => (
     <>
       <h2>log in to application</h2>
@@ -94,7 +102,9 @@ const App = () => {
         : <div>
             <p>
               {user.name} logged-in
-              <button type="submit">logout</button>
+              <button type="button" onClick={handleLogout}>
+                logout
+              </button>
             </p>
             {blogForm()}
           </div>
