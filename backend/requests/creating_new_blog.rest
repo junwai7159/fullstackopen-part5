@@ -1,0 +1,9 @@
+POST http://localhost:3003/api/blogs
+Content-Type: application/json
+
+{
+    "title": "weirddd ass adventures",
+    "author": "jason",
+    "url": "www.google.com",
+    "likes": "6"
+}
