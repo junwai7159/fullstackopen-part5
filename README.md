@@ -12,3 +12,5 @@ Navigate to `vite.config.js`, change the port number of the proxy, so that the r
 $ cd frontend
 $ npm run dev
 ```
+
+**To be continued at exercise 5.5**
