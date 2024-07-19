@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import Blog from './components/Blog'
+import Notification from './components/Notification'
 import blogService from './services/blogs'
 import loginService from './services/login'
 
@@ -13,6 +14,11 @@ const App = () => {
   const [title, setTitle] = useState('')
   const [author, setAuthor] = useState('')
   const [url, setUrl] = useState('')
+
+  const [message, setMessage] = useState({
+    message: null,
+    isError: false
+  })
 
   useEffect(() => {
     blogService.getAll().then(blogs =>
@@ -47,9 +53,12 @@ const App = () => {
       setUsername('')
       setPassword('')
     } catch (err) {
-      setErrorMessage('Wrong credentials')
+      setMessage({
+        message: 'wrong username or password',
+        isError: true
+      })
       setTimeout(() => {
-        setErrorMessage(null)
+        setMessage({ message: null, isError: false })
       }, 5000)
     }
   }
@@ -77,10 +86,20 @@ const App = () => {
       setTitle('')
       setAuthor('')
       setUrl('')
-    } catch (err) {
-      setErrorMessage(err)
+      setMessage({
+        message: `a new blog ${returnedBlog.title} by ${returnedBlog.author} added`,
+        isError: false
+      })
       setTimeout(() => {
-        setErrorMessage(null)
+        setMessage({ message: null, isError: false })
+      }, 5000)
+    } catch (err) {
+      setMessage({
+        message: 'the title and url are required in a valid format',
+        isError: true
+      })
+      setTimeout(() => {
+        setMessage({ message: null, isError: false })
       }, 5000)
     }
   }
@@ -147,7 +166,7 @@ const App = () => {
 
   return (
     <div>      
-      {/* Notification */}
+      <Notification message={message.message} isError={message.isError} />
 
       {user === null 
         ? loginForm()
